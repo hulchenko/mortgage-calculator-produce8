@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import OutputTable from './OutputTable';
 
-const Dashboard = () => {
+const Dashboard = ({ provinceRate }) => {
+  // console.log(`FROM DASHBOARD: `, provinceRate);
   const [propertyPrice, setPropertyPrice] = useState();
   const [downPayment, setDownPayment] = useState();
-  const [annualInterestRate, setAnnualInterestRate] = useState();
+  const [annualInterestRate, setAnnualInterestRate] = useState(
+    provinceRate.rate
+  );
   const [amortizationPeriod, setAmortizationPeriod] = useState(5);
   const [paymentSchedule, setPaymentSchedule] = useState('0');
   const [valid, setValid] = useState({
@@ -61,15 +64,27 @@ const Dashboard = () => {
     if (
       event.target.value !== undefined &&
       event.target.value !== null &&
-      event.target.value <= 10 &&
-      event.target.value > 0
+      event.target.value <= 10
     ) {
       setAnnualInterestRate(event.target.value);
       setValid({ ...valid, annualInterestRate: true });
-    } else {
+    }
+    if (event.target.value <= 0) {
+      setAnnualInterestRate(event.target.value);
       setValid({ ...valid, annualInterestRate: false });
     }
+    // } else {
+    //   setValid({ ...valid, annualInterestRate: false });
+    // }
   };
+
+  useEffect(() => {
+    console.log(`triggered`);
+    setAnnualInterestRate(provinceRate.rate);
+    setValid({ ...valid, annualInterestRate: true });
+  }, [provinceRate]);
+
+  console.log(annualInterestRate);
 
   const amortizationPeriodHandler = (event) => {
     setAmortizationPeriod(event.target.value);
@@ -81,18 +96,16 @@ const Dashboard = () => {
 
   const calculateHandler = () => {
     setCalculateTrigger(true);
-
     //check validation
     if (Object.values(valid).some((i) => i === false)) {
       return;
     } else {
-      console.log(`property price`, propertyPrice);
-      console.log(`down Payment`, downPayment !== undefined ? downPayment : 0);
-      console.log(`annual InterestRate`, annualInterestRate);
-      console.log(`amortization Period`, amortizationPeriod);
-      console.log(`payment Schedule`, paymentSchedule);
+      // console.log(`property price`, propertyPrice);
+      // console.log(`down Payment`, downPayment !== undefined ? downPayment : 0);
+      // console.log(`annual InterestRate`, annualInterestRate);
+      // console.log(`amortization Period`, amortizationPeriod);
+      // console.log(`payment Schedule`, paymentSchedule);
       let paymentsType;
-
       switch (paymentSchedule) {
         case '0':
           paymentsType = 26;
@@ -116,17 +129,18 @@ const Dashboard = () => {
         (principleAmount * percentageRate) /
         (1 - Math.pow(1 + percentageRate, mortgageLength * -1))
       ).toFixed(2);
-      console.log(`PRINCIPLE: `, principleAmount);
-      console.log(`Percentage Rate: `, percentageRate);
-      console.log(`Mortgage Length: `, mortgageLength);
-      console.log(`RESULT: `, resultPayment);
+      // console.log(`PRINCIPLE: `, principleAmount);
+      // console.log(`Percentage Rate: `, percentageRate);
+      // console.log(`Mortgage Length: `, mortgageLength);
+      // console.log(`RESULT: `, resultPayment);
       setMortgageLengthProp(mortgageLength);
       setResultPaymentProp(resultPayment);
       setOutputTable(true);
     }
+    return null;
   };
 
-  console.log(`validation: `, valid);
+  // console.log(`validation: `, valid);
 
   return (
     <div
@@ -135,7 +149,7 @@ const Dashboard = () => {
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        paddingTop: '2rem',
+        paddingTop: '0.5rem',
       }}
     >
       <div
@@ -146,8 +160,9 @@ const Dashboard = () => {
           background: '#fff',
           opacity: '0.9',
           width: '450px',
-          height: '400px',
+          height: '425px',
           borderRadius: '5px',
+          boxShadow: '0px 0px 10px #777',
         }}
       >
         <div style={styles.inputDiv}>
@@ -199,7 +214,7 @@ const Dashboard = () => {
           <input
             style={styles.inputField}
             placeholder={'0'}
-            defaultValue={annualInterestRate}
+            value={annualInterestRate}
             onChange={(event) => annualInterestRateHandler(event)}
             type="number"
           />
@@ -212,7 +227,7 @@ const Dashboard = () => {
                   : 'none',
             }}
           >
-            Please indicate interest rate between 0 and 10%
+            Please indicate interest rate higher than 0 and less or equal to 10%
           </p>
         </div>
         <div style={styles.inputDiv}>
@@ -269,7 +284,7 @@ const Dashboard = () => {
         <div
           style={{
             display: outputTable ? 'block' : 'none',
-            paddingTop: '1rem',
+            paddingTop: '2rem',
           }}
         >
           <OutputTable

@@ -2,7 +2,7 @@ import React from 'react';
 
 const OutputTable = (props) => {
   let totalAmount = props.mortgageLengthProp * props.resultPaymentProp;
-  console.log(isNaN(totalAmount));
+  // console.log(isNaN(totalAmount));
   const RenderTable = () => {
     let content = [];
     for (let i = 1; i <= props.mortgageLengthProp; i++) {
@@ -32,7 +32,6 @@ const OutputTable = (props) => {
     <div
       style={{
         boxShadow: '0px 0px 10px #777',
-        borderRadius: '5px',
         opacity: '0.9',
       }}
     >
