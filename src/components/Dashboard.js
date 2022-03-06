@@ -79,7 +79,7 @@ const Dashboard = ({ provinceRate }) => {
   };
 
   useEffect(() => {
-    console.log(`triggered`);
+    // console.log(`triggered`);
     setAnnualInterestRate(provinceRate.rate);
     setValid({ ...valid, annualInterestRate: true });
   }, [provinceRate]);
