@@ -12,7 +12,7 @@ const Dashboard = ({ provinceRate }) => {
   const [paymentSchedule, setPaymentSchedule] = useState('0');
   const [valid, setValid] = useState({
     propertyPrice: false,
-    downPayment: true,
+    downPayment: false,
     annualInterestRate: false,
   });
   const [mortgageLengthProp, setMortgageLengthProp] = useState();
@@ -52,13 +52,19 @@ const Dashboard = ({ provinceRate }) => {
   };
 
   const downPaymentHandler = (event) => {
-    if (event.target.value > Number(propertyPrice)) {
+    console.log(`HERE`, event.target.value);
+    if (
+      Number(event.target.value) > Number(propertyPrice) ||
+      Number(event.target.value) < Number((propertyPrice * 10) / 100)
+    ) {
       setValid({ ...valid, downPayment: false });
     } else {
       setDownPayment(event.target.value);
       setValid({ ...valid, downPayment: true });
     }
   };
+
+  console.log(downPayment);
 
   const annualInterestRateHandler = (event) => {
     if (
@@ -183,12 +189,12 @@ const Dashboard = ({ provinceRate }) => {
                   : 'none',
             }}
           >
-            Value cannot be zero
+            <i>Value cannot be zero</i>
           </p>
         </div>
         <div style={styles.inputDiv}>
           <label>
-            Down Payment <i>(optional)</i>
+            Down Payment <i>(min. 10%)</i>
           </label>
           <input
             style={styles.inputField}
@@ -206,7 +212,7 @@ const Dashboard = ({ provinceRate }) => {
                   : 'none',
             }}
           >
-            Down payment value cannot be higher than property price
+            <i>10% min. cannot be higher than property price</i>
           </p>
         </div>
         <div style={styles.inputDiv}>
@@ -227,7 +233,7 @@ const Dashboard = ({ provinceRate }) => {
                   : 'none',
             }}
           >
-            Please indicate interest rate higher than 0 and less or equal to 10%
+            <i>higher than 0 and less or equal to 10%</i>
           </p>
         </div>
         <div style={styles.inputDiv}>
