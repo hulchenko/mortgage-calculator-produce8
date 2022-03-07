@@ -172,7 +172,7 @@ const Dashboard = ({ provinceRate }) => {
         }}
       >
         <div style={styles.inputDiv}>
-          <label style={{ paddingTop: '7px' }}>Property Price</label>
+          <label style={{ paddingTop: '7px' }}>Property Price ($)</label>
           <input
             placeholder={'0'}
             defaultValue={propertyPrice}
@@ -194,7 +194,7 @@ const Dashboard = ({ provinceRate }) => {
         </div>
         <div style={styles.inputDiv}>
           <label>
-            Down Payment <i>(min. 10%)</i>
+            Down Payment ($)<i></i>
           </label>
           <input
             style={styles.inputField}
@@ -212,11 +212,11 @@ const Dashboard = ({ provinceRate }) => {
                   : 'none',
             }}
           >
-            <i>10% min. cannot be higher than property price</i>
+            <i>10% min, 100% max</i>
           </p>
         </div>
         <div style={styles.inputDiv}>
-          <label>Annual Interest Rate</label>
+          <label>Annual Interest Rate (%)</label>
           <input
             style={styles.inputField}
             placeholder={'0'}
