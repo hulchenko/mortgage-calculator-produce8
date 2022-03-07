@@ -52,7 +52,6 @@ const Dashboard = ({ provinceRate }) => {
   };
 
   const downPaymentHandler = (event) => {
-    console.log(`HERE`, event.target.value);
     if (
       Number(event.target.value) > Number(propertyPrice) ||
       Number(event.target.value) < Number((propertyPrice * 10) / 100)
@@ -63,8 +62,6 @@ const Dashboard = ({ provinceRate }) => {
       setValid({ ...valid, downPayment: true });
     }
   };
-
-  console.log(downPayment);
 
   const annualInterestRateHandler = (event) => {
     if (
