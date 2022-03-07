@@ -8,7 +8,7 @@ const App = () => {
     { province: 'BC', rate: '2.74' },
     { province: 'AB', rate: '2.69' },
   ];
-  const [provinceRate, setProvinceRate] = useState(rates[1]);
+  const [provinceRate, setProvinceRate] = useState(rates[0]);
   const provinceHandler = (e) => {
     switch (e.target.value) {
       case 'BC':
