@@ -22,7 +22,7 @@ const App = () => {
 
   const styles = {
     mainContainer: {
-      backgroundImage: `url(${backgroundImage})`,
+      backgroundImage: `url(${backgroundImage.replace(/^\/+/g, '')})`,
       backgroundSize: 'cover',
       height: '100vh',
       width: '100wh',
